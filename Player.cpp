@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <iostream>
+#include <cmath>
 
 Player::Player(Vector2 pos, float rotation) {
     this->rect = { pos.x, pos.y, 200, 50 };
@@ -11,10 +12,7 @@ void Player::draw(Color col) {
 }
 
 bool Player::collide(Ball& ball) {
-    
-    if (CheckCollisionCircleRec(ball.pos, 10.0f, this->rect)) {
-        return true;
-    }
+    // make the collisions work, the DrawRect function is the same as the raylib one but updates the corners array so every corner position is stored in it: corners[0] = topLeft corner, corners[1] = topRight corner, corners[2] = bottomRight corner, corners[3] = bottomLeft corner. So if you're good at math make something with it and make it work
 
     return false;
 }
@@ -56,12 +54,13 @@ void Player::DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color
 
         bottomRight.x = x + (dx + rec.width)*cosRotation - (dy + rec.height)*sinRotation;
         bottomRight.y = y + (dx + rec.width)*sinRotation + (dy + rec.height)*cosRotation;
-    }
 
+    }
     corners[0] = topLeft;
     corners[1] = topRight;
     corners[2] = bottomRight;
     corners[3] = bottomLeft;
+
 
 #if defined(SUPPORT_QUADS_DRAW_MODE)
     rlSetTexture(texShapes.id);

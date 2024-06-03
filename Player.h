@@ -12,7 +12,7 @@ public:
     Player(Vector2 pos, float rotation);
 
     float rotation;
-    Vector2 corners[4] = {(Vector2){0, 0}, (Vector2){0, 0}, (Vector2){0, 0}, (Vector2){0, 0}};
+    Vector2 corners[4] = {(Vector2){0, 0}, (Vector2){0, 0}};
     Rectangle rect;
 
     void draw(Color col);

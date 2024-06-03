@@ -15,8 +15,8 @@ int main () {
     Vector2 pos = { (screenWidth / 2), (screenHeight / 2) };
     Player player(pos, 0.0f);
 
-    pos = { (screenWidth / 2), 100 };
-    Vector2 vel = { 0, 5.0f };
+    pos = { (screenWidth / 2), 600 };
+    Vector2 vel = { 0, 0 };
     Ball ball(pos, vel);
 
     while (WindowShouldClose() == false){
