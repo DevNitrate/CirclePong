@@ -17,6 +17,6 @@ public:
 
     void draw(Color col);
     void collide(Ball& ball);
+    void lose(Ball& ball);
     void DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color);
-    
 };

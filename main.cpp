@@ -16,7 +16,7 @@ int main () {
     Player player(pos, 180.0f);
 
     pos = { (screenWidth / 2), 300 };
-    Vector2 vel = { 2.0f, 0.0f };
+    Vector2 vel = { 2.0f, 1.0f };
     Ball ball(pos, vel);
 
     while (WindowShouldClose() == false){
@@ -24,6 +24,7 @@ int main () {
         if (IsKeyDown(KEY_RIGHT)) player.rotation -= 4.0f;
 
         player.collide(ball);
+        player.lose(ball);
         BeginDrawing();
             ClearBackground(BLACK);
 

@@ -36,9 +36,17 @@ void Player::collide(Ball& ball) {
         ball.vel.x *= -1; // invert the x speed
         ball.vel.y *= -1; // invert the y speed
     }
+}
 
-    if (ball.pos.x > (GetScreenWidth() / 2) + 225) {
-       exit(0);
+void Player::lose(Ball& ball) {
+    int centerX = (GetScreenWidth() / 2);
+    int centerY = (GetScreenHeight() / 2);
+    int distX = centerX - ball.pos.x;
+    int distY = centerY - ball.pos.y;
+    int dist = sqrt((distX * distX) + (distY * distY));
+
+    if (dist > 230) {
+        std::cout << "lose";
     }
 }
 
