@@ -16,18 +16,30 @@ void Player::draw(Color col) {
 //   Checkcollide = corners[0] - Ball.pos;
 //}
 
-bool Player::collide(Ball& ball) {
+void Player::collide(Ball& ball) {
     // make the collisions work, the DrawRect function is the same as the raylib one but updates the corners array so every corner position is stored in it: corners[0] = topLeft corner, corners[1] = topRight corner, corners[2] = bottomRight corner, corners[3] = bottomLeft corner. So if you're good at math make something with it and make it work
-    Vector2 maxCorner = corners[0];  // top-left corner
-    Vector2 minCorner = corners[2];  // bottom right corner   GG to who fixs
+    
+    int lengthX = corners[2].x - corners[3].x; // get the horizontal between the two points of the line
+    int lengthY = corners[2].y - corners[3].y; // same as above but for vertical distance
+    int length = sqrt((lengthX * lengthX) + (lengthY * lengthY)); // now get the actual distance using pythagorean theorem: sqrt(A^2 + B^2) = hypothenus
 
-    //btw this code "should" check if the ball is inside the rectangle ))))))
-    if (ball.pos.x >= maxCorner.x && ball.pos.x <= minCorner.x &&
-        ball.pos.y >= maxCorner.y && ball.pos.y <= minCorner.y) {             //I wrote this really fast so there is a mistake there
-        return true;
+    float dot = (((ball.pos.x - corners[2].x) * (corners[3].x - corners[2].x) + (ball.pos.y - corners[2].y) * (corners[3].y - corners[2].y))) / pow(length, 2);
+
+    float closestX = corners[2].x + (dot * (corners[3].x - corners[2].x));
+    float closestY = corners[2].y + (dot * (corners[3].y - corners[2].y));
+
+    float distX = closestX - ball.pos.x;
+    float distY = closestY - ball.pos.y;
+    float dist = sqrt((distX * distX) + (distY * distY));
+
+    if (dist <= 10.0f) { // is the distance of the ball to the closest point on the line is less than or equal to the radius it means we are colliding
+        ball.vel.x *= -1; // invert the x speed
+        ball.vel.y *= -1; // invert the y speed
     }
 
-    return false;
+    if (ball.pos.x > (GetScreenWidth() / 2) + 225) {
+       exit(0);
+    }
 }
 
 void Player::DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color)

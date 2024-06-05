@@ -16,7 +16,7 @@ public:
     Rectangle rect;
 
     void draw(Color col);
-    bool collide(Ball& ball);
+    void collide(Ball& ball);
     void DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color);
     
 };

@@ -13,27 +13,21 @@ int main () {
     SetTargetFPS(60);
 
     Vector2 pos = { (screenWidth / 2), (screenHeight / 2) };
-    Player player(pos, 0.0f);
+    Player player(pos, 180.0f);
 
-    pos = { (screenWidth / 2), 100 };
-    Vector2 vel = { 0, 5.0f };
+    pos = { (screenWidth / 2), 300 };
+    Vector2 vel = { 2.0f, 0.0f };
     Ball ball(pos, vel);
 
     while (WindowShouldClose() == false){
         if (IsKeyDown(KEY_LEFT)) player.rotation += 4.0f;
         if (IsKeyDown(KEY_RIGHT)) player.rotation -= 4.0f;
 
-        bool collide = player.collide(ball);
+        player.collide(ball);
         BeginDrawing();
             ClearBackground(BLACK);
 
-            if (collide) {
-                ball.vel.y += 1;
-                ball.vel.x -= 1;
-                //player.draw({ 255, 0, 0, 255 });
-            } else {
-                player.draw({ 255, 255, 255, 255 });
-            }
+            player.draw({ 255, 255, 255, 255 });
             ball.draw();
         EndDrawing();
     }
