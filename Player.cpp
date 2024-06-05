@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Ball.h"
 #include <iostream>
 #include <cmath>
 
@@ -11,8 +12,20 @@ void Player::draw(Color col) {
     DrawRect(rect, { 100, 25 + 250}, rotation, col);
 }
 
+//bool CalcDist(corners[0],this->pos,float Checkcollide ){
+//   Checkcollide = corners[0] - Ball.pos;
+//}
+
 bool Player::collide(Ball& ball) {
     // make the collisions work, the DrawRect function is the same as the raylib one but updates the corners array so every corner position is stored in it: corners[0] = topLeft corner, corners[1] = topRight corner, corners[2] = bottomRight corner, corners[3] = bottomLeft corner. So if you're good at math make something with it and make it work
+    Vector2 maxCorner = corners[0];  // top-left corner
+    Vector2 minCorner = corners[2];  // bottom right corner   GG to who fixs
+
+    //btw this code "should" check if the ball is inside the rectangle ))))))
+    if (ball.pos.x >= maxCorner.x && ball.pos.x <= minCorner.x &&
+        ball.pos.y >= maxCorner.y && ball.pos.y <= minCorner.y) {             //I wrote this really fast so there is a mistake there
+        return true;
+    }
 
     return false;
 }

@@ -6,7 +6,7 @@ Button::Button(Vector2 size, Vector2 pos, const char* text, Color col, Color tex
     this->size = size;
     this->pos = pos;
     this->text = text;
-    this->textCol = textCol;
+    this->textCol = textCol;       //sets color and size and other things
 
     int xySize = size.x + size.y;
     int avgSize = xySize / 2;
@@ -26,7 +26,6 @@ bool Button::isHovering() {
     Vector2 mousePos = GetMousePosition();
     if (mousePos.x > this->pos.x && mousePos.x < this->pos.x + this->size.x && mousePos.y > this->pos.y && mousePos.y < this->pos.y + this->size.y) {
         return true;
-    } else {
         return false;
     }
 }

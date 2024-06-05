@@ -15,8 +15,8 @@ int main () {
     Vector2 pos = { (screenWidth / 2), (screenHeight / 2) };
     Player player(pos, 0.0f);
 
-    pos = { (screenWidth / 2), 600 };
-    Vector2 vel = { 0, 0 };
+    pos = { (screenWidth / 2), 100 };
+    Vector2 vel = { 0, 5.0f };
     Ball ball(pos, vel);
 
     while (WindowShouldClose() == false){
@@ -28,7 +28,9 @@ int main () {
             ClearBackground(BLACK);
 
             if (collide) {
-                player.draw({ 255, 0, 0, 255 });
+                ball.vel.y += 1;
+                ball.vel.x -= 1;
+                //player.draw({ 255, 0, 0, 255 });
             } else {
                 player.draw({ 255, 255, 255, 255 });
             }
