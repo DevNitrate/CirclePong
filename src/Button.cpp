@@ -28,7 +28,6 @@ bool Button::isHovering() {
         return true;
         return false;
     }
-    return false;
 }
 
 bool Button::isClicked() {

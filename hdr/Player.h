@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <raylib.h>
 #include <rlgl.h>
 #include <math.h>
@@ -18,7 +19,10 @@ public:
     Rectangle rect;
 
     void draw(Color col);
-    void collide(Ball& ball);
+    void collision(Ball& ball);
     void lose(Ball& ball);
     void DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color);
+    void DeterminePhysichs(float rotation, float last_rotation,Ball& ball );
+    void GetRotation(float rotation,float last_rotation);
+    bool collide(Ball& ball);
 };

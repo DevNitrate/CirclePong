@@ -1,6 +1,8 @@
 #include "../hdr/Player.h"
 #include "../hdr/Ball.h"
 
+#include <iostream>
+#include <cmath>
 
 Player::Player(Vector2 pos, float rotation) {
     this->rect = { pos.x, pos.y, 200, 50 };
@@ -15,7 +17,59 @@ void Player::draw(Color col) {
 //   Checkcollide = corners[0] - Ball.pos;
 //}
 
-void Player::collide(Ball& ball) {
+
+void Player::GetRotation(float rotation,float last_rotation){ //gets the rotation to use in later func
+    this->rotation = rotation;
+    rotation = last_rotation;
+}
+
+
+void Player::DeterminePhysichs(float rotation,float last_rotation,Ball& ball ){ //uses last_rotation to calculate the angle it modifies the velocity on the x and y axis
+    if (last_rotation >= 200.0 && last_rotation <= 300.0){
+       ball.vel.x += 1;
+       ball.vel.y += 1;
+    }
+        if (last_rotation >= 300.0 && last_rotation <= 360.0){
+        ball.vel.x -= 1;
+        ball.vel.y += 1;
+    }
+    if (last_rotation >= 100.0 && last_rotation <= 200.0){
+       ball.vel.y -= 1;
+       ball.vel.x += 1;
+    }
+        if (last_rotation >= 300.0 && last_rotation <= 360.0){
+        ball.vel.y -= 1;
+        ball.vel.x -= 1;
+    }
+}
+
+
+
+bool Player::collide(Ball& ball) {
+    // make the collisions work, the DrawRect function is the same as the raylib one but updates the corners array so every corner position is stored in it: corners[0] = topLeft corner, corners[1] = topRight corner, corners[2] = bottomRight corner, corners[3] = bottomLeft corner. So if you're good at math make something with it and make it work
+    
+    int lengthX = corners[2].x - corners[3].x; // get the horizontal between the two points of the line
+    int lengthY = corners[2].y - corners[3].y; // same as above but for vertical distance
+    int length = sqrt((lengthX * lengthX) + (lengthY * lengthY)); // now get the actual distance using pythagorean theorem: sqrt(A^2 + B^2) = hypothenus
+
+    float dot = (((ball.pos.x - corners[2].x) * (corners[3].x - corners[2].x) + (ball.pos.y - corners[2].y) * (corners[3].y - corners[2].y))) / pow(length, 2);
+
+    float closestX = corners[2].x + (dot * (corners[3].x - corners[2].x));
+    float closestY = corners[2].y + (dot * (corners[3].y - corners[2].y));
+
+    float distX = closestX - ball.pos.x;
+    float distY = closestY - ball.pos.y;
+    float dist = sqrt((distX * distX) + (distY * distY));
+
+    if (dist <= 10.0f) { // is the distance of the ball to the closest point on the line is less than or equal to the radius it means we are colliding
+        ball.vel.x *= -1; // invert the x speed
+        ball.vel.y *= -1; // invert the y speed
+    }
+
+    return rotation;
+}
+
+void Player::collision(Ball& ball) {
     // make the collisions work, the DrawRect function is the same as the raylib one but updates the corners array so every corner position is stored in it: corners[0] = topLeft corner, corners[1] = topRight corner, corners[2] = bottomRight corner, corners[3] = bottomLeft corner. So if you're good at math make something with it and make it work
     
     int lengthX = corners[2].x - corners[3].x; // get the horizontal between the two points of the line
@@ -43,8 +97,6 @@ void Player::lose(Ball& ball) {
     int distX = centerX - ball.pos.x;
     int distY = centerY - ball.pos.y;
     int dist = sqrt((distX * distX) + (distY * distY));
-    //std::cout << "dist: ";
-    std::cout << dist << std::endl;
 
     if (dist > 230) {
         std::cout << "lose";
