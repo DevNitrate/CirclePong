@@ -1,4 +1,4 @@
-#include "Ball.h"
+#include "../hdr/Ball.h"
 
 Ball::Ball(Vector2 pos, Vector2 vel) {
     this->pos = pos;

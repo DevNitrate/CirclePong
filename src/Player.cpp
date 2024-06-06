@@ -1,7 +1,6 @@
-#include "Player.h"
-#include "Ball.h"
-#include <iostream>
-#include <cmath>
+#include "../hdr/Player.h"
+#include "../hdr/Ball.h"
+
 
 Player::Player(Vector2 pos, float rotation) {
     this->rect = { pos.x, pos.y, 200, 50 };
@@ -44,6 +43,8 @@ void Player::lose(Ball& ball) {
     int distX = centerX - ball.pos.x;
     int distY = centerY - ball.pos.y;
     int dist = sqrt((distX * distX) + (distY * distY));
+    //std::cout << "dist: ";
+    std::cout << dist << std::endl;
 
     if (dist > 230) {
         std::cout << "lose";

@@ -1,4 +1,4 @@
-#include "Button.h"
+#include "../hdr/Button.h"
 
 Button::Button(Vector2 size, Vector2 pos, const char* text, Color col, Color textCol) {
     this->btn = { pos.x, pos.y, size.x, size.y };
@@ -28,6 +28,7 @@ bool Button::isHovering() {
         return true;
         return false;
     }
+    return false;
 }
 
 bool Button::isClicked() {

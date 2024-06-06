@@ -1,9 +1,9 @@
 #include <iostream>
 #include <raylib.h>
 
-#include "Player.h"
-#include "Button.h"
-#include "Ball.h"
+#include "../hdr/Player.h"
+#include "../hdr/Button.h"
+#include "../hdr/Ball.h"
 
 int main () {
     const int screenWidth = 1280;
