@@ -3,6 +3,8 @@
 #include <raylib.h>
 #include <rlgl.h>
 #include <math.h>
+#include <iostream>
+#include <cmath>
 
 #include "Button.h"
 #include "Ball.h"
