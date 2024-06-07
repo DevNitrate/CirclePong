@@ -13,16 +13,10 @@ void Player::draw(Color col) {
     DrawRect(rect, { 100, 25 + 250}, rotation, col);
 }
 
-//bool CalcDist(corners[0],this->pos,float Checkcollide ){
-//   Checkcollide = corners[0] - Ball.pos;
-//}
-
-
-void Player::GetRotation(float rotation,float last_rotation){ //gets the rotation to use in later func
+void Player::GetRotation(float lastRotation){ //gets the rotation to use in later func
     this->rotation = rotation;
-    rotation = last_rotation;
+    this->lastRotation = lastRotation;
 }
-
 
 void Player::DeterminePhysichs(float rotation,float last_rotation,Ball& ball ){ //uses last_rotation to calculate the angle it modifies the velocity on the x and y axis
     if (last_rotation >= 200.0 && last_rotation <= 300.0){
@@ -43,11 +37,7 @@ void Player::DeterminePhysichs(float rotation,float last_rotation,Ball& ball ){ 
     }
 }
 
-
-
-bool Player::collide(Ball& ball) {
-    // make the collisions work, the DrawRect function is the same as the raylib one but updates the corners array so every corner position is stored in it: corners[0] = topLeft corner, corners[1] = topRight corner, corners[2] = bottomRight corner, corners[3] = bottomLeft corner. So if you're good at math make something with it and make it work
-    
+bool Player::collide(Ball& ball) {    
     int lengthX = corners[2].x - corners[3].x; // get the horizontal between the two points of the line
     int lengthY = corners[2].y - corners[3].y; // same as above but for vertical distance
     int length = sqrt((lengthX * lengthX) + (lengthY * lengthY)); // now get the actual distance using pythagorean theorem: sqrt(A^2 + B^2) = hypothenus

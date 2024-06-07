@@ -15,6 +15,7 @@ public:
     Player(Vector2 pos, float rotation);
 
     float rotation;
+    float lastRotation;
     Vector2 corners[4] = {(Vector2){0, 0}, (Vector2){0, 0}};
     Rectangle rect;
 
@@ -23,6 +24,6 @@ public:
     void lose(Ball& ball);
     void DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color);
     void DeterminePhysichs(float rotation, float last_rotation,Ball& ball );
-    void GetRotation(float rotation,float last_rotation);
+    void GetRotation(float last_rotation);
     bool collide(Ball& ball);
 };
