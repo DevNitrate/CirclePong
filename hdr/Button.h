@@ -11,15 +11,15 @@ enum class Event {
 
 class Button {
 public:
-    Button(Vector2 size, Vector2 pos, const char* text, Color col, Color textCol);
+    Button(Vector2 size, Vector2 pos, const char* text, Color col, Color textCol, int fontSize);
 
     Rectangle btn;
     Color col;
     Color textCol;
     Vector2 size;
     Vector2 pos;
-    int avgSize;
     std::string text;
+    int fontSize;
 
     void draw();
     bool isHovering();

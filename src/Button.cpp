@@ -1,21 +1,16 @@
 #include "../hdr/Button.h"
 
-Button::Button(Vector2 size, Vector2 pos, const char* text, Color col, Color textCol) {
+Button::Button(Vector2 size, Vector2 pos, const char* text, Color col, Color textCol, int fontSize) {
     this->btn = { pos.x, pos.y, size.x, size.y };
     this->col = col;
     this->size = size;
     this->pos = pos;
     this->text = text;
-    this->textCol = textCol;       //sets color and size and other things
-
-    int xySize = size.x + size.y;
-    int avgSize = xySize / 2;
-
-    this->avgSize = avgSize;
+    this->textCol = textCol;
+    this->fontSize = fontSize;
 }
 
 void Button::draw() {
-    int fontSize = this->avgSize/5;
     int x = ((this->pos.x + this->size.x/2) - (this->text.size()) * (fontSize/4));
     int y = ((this->pos.y + this->size.y/2) - (fontSize/2));
     DrawRectangleRec(this->btn, this->col);

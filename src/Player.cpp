@@ -4,22 +4,20 @@
 #include <iostream>
 #include <cmath>
 
+float distance(Vector2 a, Vector2 b) {
+    float distX = a.x - b.x;
+    float distY = a.y - b.y;
+    return sqrt((distX * distX) + (distY * distY));
+}
+
 Player::Player(Vector2 pos, float rotation) {
     this->rect = { pos.x, pos.y, 200, 50 };
     this->rotation = rotation;
 }
 
 void Player::draw(Color col) {
-    DrawRect(rect, { 100, 25 + 250}, rotation, col);
-    //DrawLine(corners[2].x, corners[2].y, corners[3].x, corners[3].y, RED);
-}
-
-float distance(Vector2 a, Vector2 b) {
-    int lengthX = a.x - b.x;
-    int lengthY = a.y - b.y;
-    int length = sqrt((lengthX * lengthX) + (lengthY * lengthY));
-
-    return length;
+    DrawRect(rect, { 100, 25 + 290}, rotation, col);
+    this->cornerDist = distance(corners[2], { (float)(GetScreenWidth() / 2), (float)(GetScreenHeight() / 2) });
 }
 
 bool Player::collide(Ball& ball) {    
@@ -33,10 +31,12 @@ bool Player::collide(Ball& ball) {
     float closestY = corners[2].y + (dot * (corners[3].y - corners[2].y));
 
     bool isOnLine = false;
+    bool invertSpeed = false;
 
     if (rotation > 90 && rotation < 270) {
         if (closestX > corners[2].x && closestX < corners[3].x) {
             isOnLine = true;
+            invertSpeed = true;
         }
     } else {
         if (closestX < corners[2].x && closestX > corners[3].x) {
@@ -49,24 +49,32 @@ bool Player::collide(Ball& ball) {
     float dist = sqrt((distX * distX) + (distY * distY));
 
     if (dist <= 10.0f && isOnLine == true) { // is the distance of the ball to the closest point on the line is less than or equal to the radius it means we are colliding
-        ball.vel.x *= -1; // invert the x speed
-        ball.vel.y *= -1; // invert the y speed
+        float xRatio = (float)(rand()) / (float)(RAND_MAX);
+        float yRatio = 1.0f - xRatio;
+        ball.vel.x = ball.maxSpeed * xRatio;
+        ball.vel.y = ball.maxSpeed * yRatio;
+
+        if (invertSpeed) {
+            ball.vel.x *= -1;
+            ball.vel.y *= -1;
+        }
         return true;
     }
 
     return false;
 }
 
-void Player::lose(Ball& ball) {
-    int centerX = (GetScreenWidth() / 2);
-    int centerY = (GetScreenHeight() / 2);
-    int distX = centerX - ball.pos.x;
-    int distY = centerY - ball.pos.y;
-    int dist = sqrt((distX * distX) + (distY * distY));
+bool Player::lose(Ball& ball) {
+    float centerX = (GetScreenWidth() / 2);
+    float centerY = (GetScreenHeight() / 2);
+    int dist = distance({ centerX, centerY }, ball.pos);
+    //float cornerDist = distance(corners[2], { centerX, centerY });
 
-    if (dist > 230) {
-        //std::cout << "lose";
+    if (dist > this->cornerDist + 15) {
+        return true;
     }
+
+    return false;
 }
 
 void Player::DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color)

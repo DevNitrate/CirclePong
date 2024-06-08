@@ -1,8 +1,9 @@
 #include "../hdr/Ball.h"
 
-Ball::Ball(Vector2 pos, Vector2 vel) {
+Ball::Ball(Vector2 pos, Vector2 vel, float maxSpeed) {
     this->pos = pos;
     this->vel = vel;
+    this->maxSpeed = maxSpeed;
 }
 
 void Ball::draw() {
@@ -13,6 +14,6 @@ void Ball::draw() {
 
 void Ball::movement() {
     if (this->vel.y < 3.0f) {
-        vel.y += 0.1f;
+        //vel.y += 0.1f;
     }
 }

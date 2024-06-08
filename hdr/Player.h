@@ -18,10 +18,10 @@ public:
     float lastRotation;
     Vector2 corners[4] = {(Vector2){0, 0}, (Vector2){0, 0}};
     Rectangle rect;
+    float cornerDist;
 
     void draw(Color col);
-    void collision(Ball& ball);
-    void lose(Ball& ball);
+    bool lose(Ball& ball);
     void DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color);
     bool collide(Ball& ball);
 };
