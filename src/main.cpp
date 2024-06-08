@@ -26,6 +26,8 @@ int main () {
     const int screenWidth = 1280;
     const int screenHeight = 720;
 
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
+
     InitWindow(screenWidth, screenHeight, "raylib");
     SetTargetFPS(60);
 
@@ -40,13 +42,8 @@ int main () {
         if (IsKeyDown(KEY_LEFT)) player.rotation += 4.0f;
         if (IsKeyDown(KEY_RIGHT)) player.rotation -= 4.0f;
 
-        player.collision(ball);   //changed the name to create a boolean for the if
+        bool collide = player.collide(ball);   //changed the name to create a boolean for the if
         player.lose(ball);
-
-        if (player.collide(ball)){      //checks if the player collides
-           player.GetRotation( rotation,float last_rotation);  //gets rotation          FIX THIS PART
-           player.DeterminePhysichs( rotation,  last_rotation,ball );//uses that to calculate where to send the ball
-        }
 
         BeginDrawing();
             ClearBackground(BLACK);
