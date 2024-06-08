@@ -20,12 +20,13 @@ void Player::draw(Color col) {
     this->cornerDist = distance(corners[2], { (float)(GetScreenWidth() / 2), (float)(GetScreenHeight() / 2) });
 }
 
-bool Player::collide(Ball& ball) {    
+bool Player::collide(Ball& ball) {
+    Vector2 fpos = { ball.pos.x + (ball.vel.x * 2), ball.pos.y + (ball.vel.y * 2) }; // gets the position of the ball on next frame
     int lengthX = corners[2].x - corners[3].x; // get the horizontal between the two points of the line
     int lengthY = corners[2].y - corners[3].y; // same as above but for vertical distance
     int length = sqrt((lengthX * lengthX) + (lengthY * lengthY)); // now get the actual distance using pythagorean theorem: sqrt(A^2 + B^2) = hypothenus
 
-    float dot = (((ball.pos.x - corners[2].x) * (corners[3].x - corners[2].x) + (ball.pos.y - corners[2].y) * (corners[3].y - corners[2].y))) / pow(length, 2);
+    float dot = (((fpos.x - corners[2].x) * (corners[3].x - corners[2].x) + (fpos.y - corners[2].y) * (corners[3].y - corners[2].y))) / pow(length, 2);
 
     float closestX = corners[2].x + (dot * (corners[3].x - corners[2].x));
     float closestY = corners[2].y + (dot * (corners[3].y - corners[2].y));
@@ -44,8 +45,8 @@ bool Player::collide(Ball& ball) {
         }
     }
 
-    float distX = closestX - ball.pos.x;
-    float distY = closestY - ball.pos.y;
+    float distX = closestX - fpos.x;
+    float distY = closestY - fpos.y;
     float dist = sqrt((distX * distX) + (distY * distY));
 
     if (dist <= 10.0f && isOnLine == true) { // is the distance of the ball to the closest point on the line is less than or equal to the radius it means we are colliding
@@ -58,6 +59,8 @@ bool Player::collide(Ball& ball) {
             ball.vel.x *= -1;
             ball.vel.y *= -1;
         }
+
+        
         return true;
     }
 

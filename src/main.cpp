@@ -28,11 +28,11 @@ int main () {
 
     pos = { (screenWidth / 2), 300 };
     Vector2 vel = { 2.0f, 1.0f };
-    Ball ball(pos, vel, 3.0);
+    Ball ball(pos, vel, 3.0f);
 
     Color background = { 25, 38, 62, 255 };
 
-    int nextCollide = 5; // this is so that you don't have infinite collisions when the ball clips so a collision can only happen every 5 frame
+    int nextCollide = 10; // this is so that you don't have infinite collisions when the ball clips so a collision can only happen every 5 frame
     bool canCollide = true;
 
     bool skipFirstFrame = true; // makes the first frame of the game not make the player instantly lose
@@ -60,7 +60,7 @@ int main () {
                 nextCollide--;
             } else {
                 canCollide = true;
-                nextCollide = 5;
+                nextCollide = 10;
             }
         }
 
