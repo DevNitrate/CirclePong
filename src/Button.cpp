@@ -26,8 +26,8 @@ bool Button::isHovering() {
     Vector2 mousePos = GetMousePosition();
     if (mousePos.x > this->pos.x && mousePos.x < this->pos.x + this->size.x && mousePos.y > this->pos.y && mousePos.y < this->pos.y + this->size.y) {
         return true;
-        return false;
     }
+    return false;
 }
 
 bool Button::isClicked() {

@@ -6,21 +6,12 @@
 //    restart when lose
 //    give better looks to the game 
 //-------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
 #include <iostream>
 #include <raylib.h>
 
 #include "../hdr/Player.h"
 #include "../hdr/Button.h"
 #include "../hdr/Ball.h"
-
-
-
 
 int main () {
     const int screenWidth = 1280;
@@ -38,17 +29,35 @@ int main () {
     Vector2 vel = { 2.0f, 1.0f };
     Ball ball(pos, vel);
 
+    Color background = { 25, 38, 62, 255 };
+
+    int nextCollide = 5; // this is so that you don't have infinite collisions when the ball clips so a collision can only happen every 5 frame
+    bool canCollide = true;
+
     while (WindowShouldClose() == false){
         if (IsKeyDown(KEY_LEFT)) player.rotation += 4.0f;
         if (IsKeyDown(KEY_RIGHT)) player.rotation -= 4.0f;
 
-        bool collide = player.collide(ball);   //changed the name to create a boolean for the if
+        //ball.movement();
+
+        if (canCollide) {
+            bool collide = player.collide(ball);
+            if (collide) canCollide = false;
+        } else {
+            if (nextCollide > 0) {
+                nextCollide--;
+            } else {
+                canCollide = true;
+                nextCollide = 5;
+            }
+        }
+
         player.lose(ball);
 
         BeginDrawing();
-            ClearBackground(BLACK);
+            ClearBackground(background);
 
-            player.draw({ 255, 255, 255, 255 });
+            player.draw({ 255, 255, 255, 60 });
             ball.draw();
         EndDrawing();
     }

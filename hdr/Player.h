@@ -23,7 +23,5 @@ public:
     void collision(Ball& ball);
     void lose(Ball& ball);
     void DrawRect(Rectangle rec, Vector2 origin, float rotation, Color color);
-    void DeterminePhysichs(float rotation, float last_rotation,Ball& ball );
-    void GetRotation(float last_rotation);
     bool collide(Ball& ball);
 };

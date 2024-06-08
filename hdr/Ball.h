@@ -10,4 +10,5 @@ public:
     Vector2 vel;
 
     void draw();
+    void movement();
 };
