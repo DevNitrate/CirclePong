@@ -27,12 +27,12 @@ int main () {
     Player player(pos, 180.0f);
 
     pos = { (screenWidth / 2), 300 };
-    Vector2 vel = { 2.0f, 1.0f };
-    Ball ball(pos, vel, 3.0f);
+    Vector2 vel = { -2.0f, -1.0f };
+    Ball ball(pos, vel, 6.0f);
 
     Color background = { 25, 38, 62, 255 };
 
-    int nextCollide = 10; // this is so that you don't have infinite collisions when the ball clips so a collision can only happen every 5 frame
+    int nextCollide = 10; // this is so that you don't have infinite collisions when the ball clips so a collision can only happen every 10 frame
     bool canCollide = true;
 
     bool skipFirstFrame = true; // makes the first frame of the game not make the player instantly lose
@@ -45,7 +45,9 @@ int main () {
 
     while (WindowShouldClose() == false){
         if (IsKeyDown(KEY_LEFT)) player.rotation += 4.0f;
+        if (player.rotation == 360.0f) player.rotation = 0.0f;
         if (IsKeyDown(KEY_RIGHT)) player.rotation -= 4.0f;
+        if (player.rotation == -4.0f) player.rotation = 356.0f;
 
         ball.movement();
 
@@ -71,7 +73,6 @@ int main () {
                 ball.pos = { (screenWidth / 2), 300 };
                 ball.vel = vel;
                 player.rotation = 180.0f;
-                score = 0;
             }
         }
 
@@ -104,7 +105,12 @@ int main () {
                 bool start = endBtn.isClicked();
                 if (start) {
                     menu = Menu::Start;
+                    score = 0;
                 }
+
+                std::string scoreStr = "Score: ";
+                scoreStr.append(std::to_string(score));
+                DrawText(scoreStr.c_str(), 10, 10, 40, GREEN);
             }
         EndDrawing();
     }

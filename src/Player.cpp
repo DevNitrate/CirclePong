@@ -32,13 +32,26 @@ bool Player::collide(Ball& ball) {
     float closestY = corners[2].y + (dot * (corners[3].y - corners[2].y));
 
     bool isOnLine = false;
-    bool invertSpeed = false;
+    bool invertX = false;
+    bool invertY = false;
 
-    if (rotation > 90 && rotation < 270) {
+    if (rotation < 270 && rotation >= 180) { // bottom left
         if (closestX > corners[2].x && closestX < corners[3].x) {
             isOnLine = true;
-            invertSpeed = true;
         }
+        invertY = true;
+    } else if (rotation < 180 && rotation >= 90) { // bottom right
+        if (closestX > corners[2].x && closestX < corners[3].x) {
+            isOnLine = true;
+        }
+        invertY = true;
+        invertX = true;
+    } else if (rotation < 90 && rotation > 0) { // top right
+        if (closestX < corners[2].x && closestX > corners[3].x) {
+            isOnLine = true;
+        }
+
+        invertX = true;
     } else {
         if (closestX < corners[2].x && closestX > corners[3].x) {
             isOnLine = true;
@@ -55,8 +68,11 @@ bool Player::collide(Ball& ball) {
         ball.vel.x = ball.maxSpeed * xRatio;
         ball.vel.y = ball.maxSpeed * yRatio;
 
-        if (invertSpeed) {
+        if (invertX) {
             ball.vel.x *= -1;
+        }
+
+        if (invertY) {
             ball.vel.y *= -1;
         }
 
